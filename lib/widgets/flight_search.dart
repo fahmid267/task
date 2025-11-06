@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:task/pages/flights.dart';
 
 class FlightSearch extends StatefulWidget {
@@ -29,10 +28,6 @@ class FlightSearchState extends State<FlightSearch> {
   int passengers = 1;
   String? flightClass;
 
-  // final fromController = TextEditingController();
-  // final toController = TextEditingController();
-  // final passengerController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -48,75 +43,65 @@ class FlightSearchState extends State<FlightSearch> {
             spacing: 20,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          trip = "One-Way";
-                        });
-                      },
-                      child: Text("One-Way",),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: trip == "One-Way"
-                            ? Colors.blue
-                            : Colors.transparent,
-                        foregroundColor: trip == "One-Way"
-                            ? Colors.white
-                            : Colors.black,
-                        padding: EdgeInsets.symmetric(horizontal: 2)
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        trip = "One-Way";
+                      });
+                    },
+                    child: Text("One-Way"),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: trip == "One-Way"
+                          ? Colors.blue
+                          : Colors.transparent,
+                      foregroundColor: trip == "One-Way"
+                          ? Colors.white
+                          : Colors.black,
+                      minimumSize: Size(0, 40),
+                      padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
-
-                  SizedBox(width: 5,),
-
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          trip = "Round Trip";
-                        });
-                      },
-                      child: Text("Round Trip",),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: trip == "Round Trip"
-                            ? Colors.blue
-                            : Colors.transparent,
-                        foregroundColor: trip == "Round Trip"
-                            ? Colors.white
-                            : Colors.black,
-                        padding: EdgeInsets.symmetric(horizontal: 2)
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        trip = "Round Trip";
+                      });
+                    },
+                    child: Text("Round Trip"),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: trip == "Round Trip"
+                          ? Colors.blue
+                          : Colors.transparent,
+                      foregroundColor: trip == "Round Trip"
+                          ? Colors.white
+                          : Colors.black,
+                      minimumSize: Size(0, 40),
+                      padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
-
-                  SizedBox(width: 5,),
-
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          trip = "Multi-City";
-                        });
-                      },
-                      child: Text("Multi-City"),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: trip == "Multi-City"
-                            ? Colors.blue
-                            : Colors.transparent,
-                        foregroundColor: trip == "Multi-City"
-                            ? Colors.white
-                            : Colors.black,
-                        padding: EdgeInsets.symmetric(horizontal: 2)
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        trip = "Multi-City";
+                      });
+                    },
+                    child: Text("Multi-City"),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: trip == "Multi-City"
+                          ? Colors.blue
+                          : Colors.transparent,
+                      foregroundColor: trip == "Multi-City"
+                          ? Colors.white
+                          : Colors.black,
+                      minimumSize: Size(0, 40),
+                      padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
                 ],
               ),
 
-              
               // From Dropdown
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
@@ -137,7 +122,6 @@ class FlightSearchState extends State<FlightSearch> {
                 },
               ),
 
-              
               // To Dropdown
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
@@ -158,7 +142,6 @@ class FlightSearchState extends State<FlightSearch> {
                 },
               ),
 
-              
               // Date
               GestureDetector(
                 onTap: () async {
@@ -189,69 +172,49 @@ class FlightSearchState extends State<FlightSearch> {
                 ),
               ),
 
-              Row(
-                children: [
-                  // Passengers selection
-                  Expanded(
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 2),
-                        label: Text(
-                          "Passengers",
-                          style: TextStyle(fontSize: 9),
-                        ),
-                        prefixIcon: Icon(Icons.people),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      items: List.generate(10, (index) => index + 1)
-                          .map(
-                            (num) => DropdownMenuItem(
-                              value: num,
-                              child: Text(num.toString()),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          if (value != null) {
-                            passengers = value;
-                          }
-                        });
-                      },
-                    ),
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 2),
+                  label: Text("Passengers"),
+                  prefixIcon: Icon(Icons.people),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-
-                  SizedBox(width: 5),
-
-                  
-                  // Flight Class
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 2),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        labelText: "Class",
-                        prefixIcon: Icon(Icons.flight_class),
+                ),
+                items: List.generate(10, (index) => index + 1)
+                    .map(
+                      (num) => DropdownMenuItem(
+                        value: num,
+                        child: Text(num.toString()),
                       ),
-                      items: classes.map((String cls) {
-                        return DropdownMenuItem<String>(
-                          value: cls,
-                          child: Text(cls),
-                        );
-                      }).toList(),
-                      onChanged: ((value) {
-                        flightClass = value;
-                      }),
-                    ),
-                  ),
-                ],
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      passengers = value;
+                    }
+                  });
+                },
               ),
 
-              
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 2),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  labelText: "Class",
+                  prefixIcon: Icon(Icons.flight_class),
+                ),
+                items: classes.map((String cls) {
+                  return DropdownMenuItem<String>(value: cls, child: Text(cls));
+                }).toList(),
+                onChanged: ((value) {
+                  flightClass = value;
+                }),
+              ),
+
               // Search Flight Button
               Container(
                 width: double.infinity,

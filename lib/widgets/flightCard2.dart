@@ -22,11 +22,6 @@ class FlightCard2 extends StatelessWidget {
                 Row(
                   spacing: 10,
                   children: [
-                    // Image.asset(
-                    //   flight!.airlineLogoPath,
-                    //   width: 50,
-                    //   height: 50,
-                    // ),
                     CircleAvatar(
                       radius: 20,
                       backgroundImage: AssetImage(flight!.airlineLogoPath),
@@ -64,19 +59,20 @@ class FlightCard2 extends StatelessWidget {
                 Column(
                   children: [
                     Text(flight!.from, style: TextStyle(fontSize: 15)),
-                    Text(flight!.departureTime, style: TextStyle(fontSize: 15)),
+                    Text(
+                      flight!.departureTime, 
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
                   ],
                 ),
 
                 Container(
                   child: Column(
                     children: [
-                      // Image.asset(
-                      //   "assets/images/flight_card_img.png",
-                      //   width: 50,
-                      //   height: 50,
-                      // ),
-                      Text("time"),
+                      Text(flight.duration),
                       Text("Direct"),
                     ],
                   ),
@@ -85,7 +81,13 @@ class FlightCard2 extends StatelessWidget {
                 Column(
                   children: [
                     Text(flight!.to, style: TextStyle(fontSize: 15)),
-                    Text(flight!.arrivalTime, style: TextStyle(fontSize: 15)),
+                    Text(
+                      flight!.arrivalTime, 
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
                   ],
                 ),
               ],

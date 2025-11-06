@@ -8,17 +8,23 @@ import 'package:task/widgets/flightCard2.dart';
 import 'package:task/widgets/passengerDetails.dart';
 import 'package:task/widgets/seatNumber.dart';
 
-class FlightBookingScreen extends StatelessWidget {
+class FlightBookingScreen extends StatefulWidget {
   final Flight flight;
 
-  final Passenger passenger = Passenger(
-    name: "Fahmid",
-    contactNo: "+8801728826321",
-    email: "fahmid267@gmail.com",
-    imagePath: "images/user_image.png"
-  );
-
   FlightBookingScreen({super.key, required this.flight});
+
+  @override
+  State<FlightBookingScreen> createState() => FlightBookingScreenState();
+}
+
+class FlightBookingScreenState extends State<FlightBookingScreen> {
+  int? selectedSeat;
+
+  Passenger passenger = Passenger(
+    name: "",
+    contactNo: "",
+    email: "",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,7 @@ class FlightBookingScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Flight Info Card
-                    FlightCard2(flight: flight),
+                    FlightCard2(flight: widget.flight),
 
                     SizedBox(height: 10),
 
@@ -67,6 +73,11 @@ class FlightBookingScreen extends StatelessWidget {
                               ],
                             ),
 
+                            Divider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+
                             SizedBox(height: 20),
 
                             // Flight ammenities list widget
@@ -82,11 +93,21 @@ class FlightBookingScreen extends StatelessWidget {
 
                     // SizedBox(height: 20),
 
-                    PassengerDetails(),
+                    PassengerDetails(
+                      onPassengerChanged: (updatedPassenger) {
+                        passenger = updatedPassenger;
+                      },
+                    ),
 
                     SizedBox(height: 20),
 
-                    SeatNumber(),
+                    SeatNumber(
+                      onSeatSelected: (seat) {
+                        setState(() {
+                          selectedSeat = seat;
+                        });
+                      },
+                    ),
 
                     SizedBox(height: 20),
 
@@ -129,10 +150,10 @@ class FlightBookingScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${flight.airline} (Adult) x1"),
+                                    Text("${widget.flight.airline} (Adult) x1"),
 
                                     Text(
-                                      "\$" + flight.price.toString() + ".00",
+                                      "\$" + widget.flight.price.toString() + ".00",
                                     ),
                                   ],
                                 ),
@@ -163,7 +184,7 @@ class FlightBookingScreen extends StatelessWidget {
 
                                     Text(
                                       "\$" +
-                                          (flight.price + 45.00 + 25.00)
+                                          (widget.flight.price + 45.00 + 25.00)
                                               .toString() +
                                           ".00",
                                     ),
@@ -183,19 +204,35 @@ class FlightBookingScreen extends StatelessWidget {
 
           Container(
             width: double.infinity,
-            height: 60,
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 1, color: Colors.grey)
+              )
+            ),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                    )
+                  )
                 ),
                 onPressed: () {
+                  if (passenger.name == null) {
+                    //
+                  }
                   Navigator.push(
                     context, 
                     MaterialPageRoute(
-                      builder: (context) => PaymentConfirmation(flight: flight)
+                      builder: (context) => PaymentConfirmation(
+                        flight: widget.flight,
+                        passenger: passenger,
+                        seat: selectedSeat
+                      )
                     )
                   );
                 },

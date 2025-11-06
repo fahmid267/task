@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class SeatNumber extends StatefulWidget {
-  const SeatNumber({super.key});
+  final Function(int) onSeatSelected;
+
+  const SeatNumber({super.key, required this.onSeatSelected});
 
   @override
   State<SeatNumber> createState() => _SeatNumberState();
 }
 
 class _SeatNumberState extends State<SeatNumber> {
+  int? selectedSeat;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -46,7 +50,15 @@ class _SeatNumberState extends State<SeatNumber> {
                   child: Text(num.toString())
                 )
               ).toList(),
-              onChanged: null,
+              onChanged: (value) {
+                setState(() {
+                  selectedSeat = value;
+                });
+
+                if (value != null) {
+                  widget.onSeatSelected(value);
+                }
+              },
               decoration: InputDecoration(
                 labelText: "Select Seat Number",
                 border: OutlineInputBorder(

@@ -8,6 +8,8 @@ class Flight {
   final String flightClass;
   final double price;
   final String airlineLogoPath;
+  final String duration;
+  final String flightNo;
 
   Flight({
     required this.airline,
@@ -18,6 +20,8 @@ class Flight {
     required this.arrivalTime,
     required this.flightClass,
     required this.price,
-    required this.airlineLogoPath
+    required this.airlineLogoPath,
+    required this.duration,
+    required this.flightNo
   });
 }

@@ -24,12 +24,6 @@ class FlightCard extends StatelessWidget {
                   Row(
                     spacing: 10,
                     children: [
-                      // Image.asset(
-                      //   flight!.airlineLogoPath,
-                      //   width: 50,
-                      //   height: 50,
-                      // ),
-
                       CircleAvatar(
                         radius: 20,
                         backgroundImage: AssetImage(flight!.airlineLogoPath),
@@ -45,7 +39,7 @@ class FlightCard extends StatelessWidget {
                   ),
 
                   Text(
-                    "\$" + flight!.price.toString() + "/p",
+                    "\$${flight!.price.toString()}/p",
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                 ],
@@ -63,7 +57,10 @@ class FlightCard extends StatelessWidget {
                       Text(flight!.from, style: TextStyle(fontSize: 15)),
                       Text(
                         flight!.departureTime,
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
                     ],
                   ),
@@ -76,7 +73,7 @@ class FlightCard extends StatelessWidget {
                         //   width: 50,
                         //   height: 50,
                         // ),
-                        Text("time"),
+                        Text(flight!.duration),
                         Text("Direct"),
                       ],
                     ),
@@ -85,7 +82,13 @@ class FlightCard extends StatelessWidget {
                   Column(
                     children: [
                       Text(flight!.to, style: TextStyle(fontSize: 15)),
-                      Text(flight!.arrivalTime, style: TextStyle(fontSize: 15)),
+                      Text(
+                        flight!.arrivalTime, 
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
                     ],
                   ),
                 ],

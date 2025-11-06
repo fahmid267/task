@@ -81,6 +81,11 @@ class FlightDetails extends StatelessWidget {
                           ],
                         ),
 
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+
                         SizedBox(height: 20),
 
                         // Flight Amenities list widget

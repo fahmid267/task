@@ -31,7 +31,6 @@ class MyAppState extends State<MyApp> {
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        // textTheme: GoogleFonts.capriolaTextTheme(),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.black,
@@ -42,7 +41,6 @@ class MyAppState extends State<MyApp> {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
-        // textTheme: GoogleFonts.capriolaTextTheme(),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.white,
@@ -65,7 +63,6 @@ class HomePage extends StatelessWidget {
     name: "Fahmid",
     contactNo: "+8801728826321",
     email: "fahmid267@gmail.com",
-    imagePath: "assets/images/user_image.png",
   );
 
   HomePage({super.key, required this.themeMode, required this.onThemeChanged});
@@ -76,30 +73,24 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-          leading: Padding(
-            padding: EdgeInsets.all(10),
-            child: CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage(passenger.imagePath),
-            ),
+        preferredSize: Size.fromHeight(70.0),
+        child: Material(
+          elevation: 1,
+          child: AppBar(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            title: Text("FlightApp"),
+            centerTitle: true,
+            actions: [
+              Icon(Icons.circle_notifications_outlined, size: 50),
+              Switch(
+                value: isDarkMode,
+                onChanged: onThemeChanged,
+                activeThumbColor: Colors.white,
+              ),
+            ],
+            actionsPadding: EdgeInsets.all(10),
           ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text("Good morning"), Text(passenger.name)],
-          ),
-          actions: [
-            Icon(Icons.circle_notifications_outlined, size: 50),
-            Switch(
-              value: isDarkMode,
-              onChanged: onThemeChanged,
-              activeThumbColor: Colors.white,
-            ),
-          ],
-          actionsPadding: EdgeInsets.all(10),
         ),
       ),
 
@@ -119,9 +110,9 @@ class HomePage extends StatelessWidget {
                   Text(
                     "Special Offers",
                     style: TextStyle(
-                      fontSize: 24, 
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: isDarkMode ? Colors.white : Colors.black
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                   Row(
@@ -134,9 +125,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             Text(
                               "View All",
-                              style: TextStyle(
-                                color: Colors.blue
-                              ),
+                              style: TextStyle(color: Colors.blue),
                             ),
 
                             SizedBox(width: 10),

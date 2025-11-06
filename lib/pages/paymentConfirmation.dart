@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:task/models/flight.dart';
+import 'package:task/models/passenger.dart';
 import 'package:task/pages/ticketScreen.dart';
+import 'package:task/widgets/flightCard2.dart';
 
-class PaymentConfirmation extends StatelessWidget {
+class PaymentConfirmation extends StatefulWidget {
   final Flight flight;
+  final Passenger passenger;
+  final int? seat;
 
-  // final Passenger passenger = Passenger(
-  //   name: "Fahmid",
-  //   contactNo: "+8801728826321",
-  //   email: "fahmid267@gmail.com",
-  // );
+  PaymentConfirmation({
+    super.key,
+    required this.flight,
+    required this.passenger,
+    required this.seat,
+  });
 
-  const PaymentConfirmation({super.key, required this.flight});
+  @override
+  State<PaymentConfirmation> createState() => _PaymentConfirmationState();
+}
+
+class _PaymentConfirmationState extends State<PaymentConfirmation> {
+  final List<Map<String, double>> paymentMethods = [
+    {"My Wallet": 2900.00},
+    {"Card": 3000.00},
+    {"Google Pay": 1000.00},
+  ];
+
+  final String bookingID = "BKD12739";
+
+  Map<String, double>? selectedPayMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -31,75 +49,7 @@ class PaymentConfirmation extends StatelessWidget {
                 padding: EdgeInsets.all(30),
                 child: Column(
                   children: [
-                    Card(
-                      elevation: 1,
-                      margin: EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 10,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsGeometry.all(20),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  flight!.airline,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  flight.date.toString(),
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: 15),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      flight!.from,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                    Text(
-                                      flight!.departureTime,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-
-                                Container(
-                                  child: Column(
-                                    children: [Text("time"), Text("Direct")],
-                                  ),
-                                ),
-
-                                Column(
-                                  children: [
-                                    Text(
-                                      flight!.to,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                    Text(
-                                      flight!.arrivalTime,
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    FlightCard2(flight: widget.flight),
 
                     SizedBox(height: 10),
 
@@ -120,7 +70,7 @@ class PaymentConfirmation extends StatelessWidget {
                                     SizedBox(width: 8),
 
                                     Text(
-                                      "Payment Methid",
+                                      "Payment Method",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -128,56 +78,64 @@ class PaymentConfirmation extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-
-                                IconButton(
-                                  color: Colors.blue,
-                                  onPressed: () {},
-                                  icon: Icon(Icons.edit),
-                                ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
 
-                    SizedBox(height: 20),
+                            Divider(thickness: 1, color: Colors.grey),
 
-                    Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.bar_chart),
+                            SizedBox(height: 10),
 
-                                    SizedBox(width: 8),
+                            DropdownButtonFormField<Map<String, double>>(
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+                                labelText: "Select Payment Method",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              items: paymentMethods.map((paymentMethod) {
+                                String method = paymentMethod.keys.first;
+                                double amount = paymentMethod.values.first;
 
-                                    Text(
-                                      "My points",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                return DropdownMenuItem(
+                                  value: paymentMethod,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(method),
+
+                                      Text("\$${amount.toString()}"),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+
+                              selectedItemBuilder: (context) {
+                                return paymentMethods.map((paymentMethod) {
+                                  String method = paymentMethod.keys.first;
+                                  double amount = paymentMethod.values.first;
+
+                                  return Container(
+                                    width: 250,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(method),
+
+                                        Text("\$${amount.toString()}")
+                                      ],
                                     ),
-                                  ],
-                                ),
-
-                                IconButton(
-                                  color: Colors.blue,
-                                  onPressed: () {},
-                                  icon: Icon(Icons.edit),
-                                ),
-                              ],
-                            ),
-
-                            Text(
-                              "100 points equals \$1.00. You will get 1,000 points after this",
+                                  );
+                                }).toList();
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedPayMethod = value;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -263,10 +221,12 @@ class PaymentConfirmation extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${flight.airline} (Adult) x1"),
+                                    Text("${widget.flight.airline} (Adult) x1"),
 
                                     Text(
-                                      "\$" + flight.price.toString() + ".00",
+                                      "\$" +
+                                          widget.flight.price.toString() +
+                                          ".00",
                                     ),
                                   ],
                                 ),
@@ -297,7 +257,7 @@ class PaymentConfirmation extends StatelessWidget {
 
                                     Text(
                                       "\$" +
-                                          (flight.price + 45.00 + 25.00)
+                                          (widget.flight.price + 45.00 + 25.00)
                                               .toString() +
                                           ".00",
                                     ),
@@ -317,18 +277,31 @@ class PaymentConfirmation extends StatelessWidget {
 
           Container(
             width: double.infinity,
-            height: 60,
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Colors.grey, width: 1))
+            ),
+            height: 80,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(18),
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ))
                 ),
                 onPressed: () {
                   Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => TicketScreen())
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TicketScreen(
+                        passenger: widget.passenger,
+                        flight: widget.flight,
+                        seat: widget.seat,
+                        bookingID: bookingID
+                      ),
+                    ),
                   );
                 },
                 child: Text("Pay Now"),

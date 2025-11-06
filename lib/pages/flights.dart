@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task/models/flight.dart';
 import 'package:task/pages/flightDetails.dart';
 import 'package:task/widgets/flight_card.dart';
+import 'package:intl/intl.dart';
 
 class FlightsPage extends StatelessWidget {
   final String trip;
@@ -34,6 +35,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Economy",
         price: 1250.0,
         airlineLogoPath: "assets/images/biman_bangladesh.png",
+        duration: "12h 45m",
+        flightNo: "BG400"
       ),
       Flight(
         airline: "Emirates",
@@ -45,6 +48,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Business",
         price: 1400.0,
         airlineLogoPath: "assets/images/emirates.png",
+        duration: "16h 00m",
+        flightNo: "UAE116"
       ),
       Flight(
         airline: "Qatar Airways",
@@ -56,6 +61,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Economy",
         price: 1350.0,
         airlineLogoPath: "assets/images/qatar_airways.png",
+        duration: "14h 00m",
+        flightNo: "QA213"
       ),
       Flight(
         airline: "British Airways",
@@ -67,6 +74,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Economy",
         price: 1320.0,
         airlineLogoPath: "assets/images/british_airways.jpg",
+        duration: "13h 30m",
+        flightNo: "BA78"
       ),
       Flight(
         airline: "Singapore Airlines",
@@ -78,6 +87,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Economy",
         price: 1500.0,
         airlineLogoPath: "assets/images/singapore_airlines.png",
+        duration: "14h 10m",
+        flightNo: "SIN504"
       ),
       Flight(
         airline: "Turkish Airlines",
@@ -89,6 +100,8 @@ class FlightsPage extends StatelessWidget {
         flightClass: "Economy",
         price: 1100.0,
         airlineLogoPath: "assets/images/turkish_airlines.png",
+        duration: "12h 15m",
+        flightNo: "TIL1054"
       ),
     ];
 
@@ -124,7 +137,7 @@ class FlightsPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {}, 
                 child: Text(
-                  date.toString(),
+                  DateFormat("dd MMM, yyyy").format(date),
                   style: TextStyle(
                     color: Colors.blue
                   ),
