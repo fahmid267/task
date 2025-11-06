@@ -1,41 +1,117 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:task/models/passenger.dart';
 import 'package:task/widgets/flight_search.dart';
+import 'package:task/widgets/specialOffers.dart';
+
 main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.light;
+
+  void toggleTheme(bool isDarkMode) {
+    setState(() {
+      themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Flight App",
+      title: "Flight Booking App",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)
+        brightness: Brightness.light,
+        primarySwatch: Colors.blue,
+        // textTheme: GoogleFonts.capriolaTextTheme(),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.transparent,
+          ),
+        ),
       ),
-      home: HomePage()
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
+        // textTheme: GoogleFonts.capriolaTextTheme(),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      ),
+      themeMode: themeMode,
+      home: HomePage(themeMode: themeMode, onThemeChanged: toggleTheme),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  final ThemeMode themeMode;
+  final ValueChanged<bool> onThemeChanged;
+
+  final Passenger passenger = Passenger(
+    name: "Fahmid",
+    contactNo: "+8801728826321",
+    email: "fahmid267@gmail.com",
+    imagePath: "assets/images/user_image.png",
+  );
+
+  HomePage({super.key, required this.themeMode, required this.onThemeChanged});
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = themeMode == ThemeMode.dark;
+
     return Scaffold(
-      appBar: PreferredSize(preferredSize: Size.fromHeight(100.0), child: AppBar(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      )),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: AppBar(
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          leading: Padding(
+            padding: EdgeInsets.all(10),
+            child: CircleAvatar(
+              radius: 25,
+              backgroundImage: AssetImage(passenger.imagePath),
+            ),
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text("Good morning"), Text(passenger.name)],
+          ),
+          actions: [
+            Icon(Icons.circle_notifications_outlined, size: 50),
+            Switch(
+              value: isDarkMode,
+              onChanged: onThemeChanged,
+              activeThumbColor: Colors.white,
+            ),
+          ],
+          actionsPadding: EdgeInsets.all(10),
+        ),
+      ),
 
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.all(20),
+        child: Padding(
+          padding: EdgeInsets.all(30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 25,
             children: [
               FlightSearch(),
+
+              SizedBox(height: 25),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,8 +119,9 @@ class HomePage extends StatelessWidget {
                   Text(
                     "Special Offers",
                     style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold
+                      fontSize: 24, 
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode ? Colors.white : Colors.black
                     ),
                   ),
                   Row(
@@ -52,158 +129,52 @@ class HomePage extends StatelessWidget {
                     spacing: 10,
                     children: [
                       TextButton(
-                        onPressed: () {}, 
-                        child: Text("View All")
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            Text(
+                              "View All",
+                              style: TextStyle(
+                                color: Colors.blue
+                              ),
+                            ),
+
+                            SizedBox(width: 10),
+
+                            Icon(Icons.arrow_forward_ios, color: Colors.blue),
+                          ],
+                        ),
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.blue,
-                      )
                     ],
-                  )
+                  ),
                 ],
               ),
 
-              // ListView.builder(itemBuilder: itemBuilder)
+              SizedBox(height: 20),
+
+              // ListView
+              SpecialOffer(),
             ],
           ),
-        )
+        ),
       ),
 
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.saved_search), label: "Saved"),
-          BottomNavigationBarItem(icon: Icon(Icons.airplane_ticket), label: "Bookings"),
-          // BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Wallet"),
-          // BottomNavigationBarItem(icon: Icon(Icons.verified_user), label: "Account"),
-        ]
+          BottomNavigationBarItem(icon: Icon(Icons.save_alt), label: "Saved"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.airplane_ticket),
+            label: "Bookings",
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Wallet"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            label: "Account",
+          ),
+        ],
       ),
     );
   }
 }
-
-
-
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // TRY THIS: Try running your application with "flutter run". You'll see
-//         // the application has a purple toolbar. Then, without quitting the app,
-//         // try changing the seedColor in the colorScheme below to Colors.green
-//         // and then invoke "hot reload" (save your changes or press the "hot
-//         // reload" button in a Flutter-supported IDE, or press "r" if you used
-//         // the command line to start the app).
-//         //
-//         // Notice that the counter didn't reset back to zero; the application
-//         // state is not lost during the reload. To reset the state, use hot
-//         // restart instead.
-//         //
-//         // This works for code too, not just values: Most code changes can be
-//         // tested with just a hot reload.
-//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-//       ),
-//       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
-
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       // This call to setState tells the Flutter framework that something has
-//       // changed in this State, which causes it to rerun the build method below
-//       // so that the display can reflect the updated values. If we changed
-//       // _counter without calling setState(), then the build method would not be
-//       // called again, and so nothing would appear to happen.
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // This method is rerun every time setState is called, for instance as done
-//     // by the _incrementCounter method above.
-//     //
-//     // The Flutter framework has been optimized to make rerunning build methods
-//     // fast, so that you can just rebuild anything that needs updating rather
-//     // than having to individually change instances of widgets.
-//     return Scaffold(
-//       appBar: AppBar(
-//         // TRY THIS: Try changing the color here to a specific color (to
-//         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-//         // change color while the other colors stay the same.
-//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//         // Here we take the value from the MyHomePage object that was created by
-//         // the App.build method, and use it to set our appbar title.
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         // Center is a layout widget. It takes a single child and positions it
-//         // in the middle of the parent.
-//         child: Column(
-//           // Column is also a layout widget. It takes a list of children and
-//           // arranges them vertically. By default, it sizes itself to fit its
-//           // children horizontally, and tries to be as tall as its parent.
-//           //
-//           // Column has various properties to control how it sizes itself and
-//           // how it positions its children. Here we use mainAxisAlignment to
-//           // center the children vertically; the main axis here is the vertical
-//           // axis because Columns are vertical (the cross axis would be
-//           // horizontal).
-//           //
-//           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-//           // action in the IDE, or press "p" in the console), to see the
-//           // wireframe for each widget.
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text('You have pushed the button this many times:'),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headlineMedium,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
