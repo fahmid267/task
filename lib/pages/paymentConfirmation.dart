@@ -8,12 +8,14 @@ class PaymentConfirmation extends StatefulWidget {
   final Flight flight;
   final Passenger passenger;
   final int? seat;
+  final int passengers;
 
   PaymentConfirmation({
     super.key,
     required this.flight,
     required this.passenger,
     required this.seat,
+    required this.passengers,
   });
 
   @override
@@ -121,11 +123,12 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                                   return Container(
                                     width: 250,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(method),
 
-                                        Text("\$${amount.toString()}")
+                                        Text("\$${amount.toString()}"),
                                       ],
                                     ),
                                   );
@@ -221,12 +224,12 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${widget.flight.airline} (Adult) x1"),
+                                    Text(
+                                      "${widget.flight.airline} (Adult) x${widget.passengers}",
+                                    ),
 
                                     Text(
-                                      "\$" +
-                                          widget.flight.price.toString() +
-                                          ".00",
+                                      "\$${widget.flight.price * widget.passengers}",
                                     ),
                                   ],
                                 ),
@@ -237,14 +240,14 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                                   children: [
                                     Text("Travel Insurance"),
 
-                                    Text("\$45.00"),
+                                    Text("\$45.0"),
                                   ],
                                 ),
 
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: [Text("Tax"), Text("\$25.00")],
+                                  children: [Text("Tax"), Text("\$25.0")],
                                 ),
 
                                 SizedBox(height: 30),
@@ -256,10 +259,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                                     Text("Total Price"),
 
                                     Text(
-                                      "\$" +
-                                          (widget.flight.price + 45.00 + 25.00)
-                                              .toString() +
-                                          ".00",
+                                      "\$${(widget.flight.price * widget.passengers)}",
                                     ),
                                   ],
                                 ),
@@ -278,7 +278,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey, width: 1))
+              border: Border(top: BorderSide(color: Colors.grey, width: 1)),
             ),
             height: 80,
             child: Padding(
@@ -287,11 +287,23 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ))
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
                 onPressed: () {
+                  if (selectedPayMethod == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Please select a payment method."),
+                      ),
+                    );
+
+                    return;
+                  }
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -299,7 +311,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                         passenger: widget.passenger,
                         flight: widget.flight,
                         seat: widget.seat,
-                        bookingID: bookingID
+                        bookingID: bookingID,
                       ),
                     ),
                   );

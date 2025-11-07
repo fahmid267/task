@@ -9,8 +9,6 @@ class FlightSearch extends StatefulWidget {
 }
 
 class FlightSearchState extends State<FlightSearch> {
-  // final isDark = Theme.of(context).brightness == Brightness.dark;
-
   final List<String> airports = [
     "Dhaka (DAC)",
     "New York (JFK)",
@@ -56,9 +54,6 @@ class FlightSearchState extends State<FlightSearch> {
                       backgroundColor: trip == "One-Way"
                           ? Colors.blue
                           : Colors.transparent,
-                      foregroundColor: trip == "One-Way"
-                          ? Colors.white
-                          : Colors.black,
                       minimumSize: Size(0, 40),
                       padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
@@ -74,9 +69,6 @@ class FlightSearchState extends State<FlightSearch> {
                       backgroundColor: trip == "Round Trip"
                           ? Colors.blue
                           : Colors.transparent,
-                      foregroundColor: trip == "Round Trip"
-                          ? Colors.white
-                          : Colors.black,
                       minimumSize: Size(0, 40),
                       padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
@@ -92,9 +84,6 @@ class FlightSearchState extends State<FlightSearch> {
                       backgroundColor: trip == "Multi-City"
                           ? Colors.blue
                           : Colors.transparent,
-                      foregroundColor: trip == "Multi-City"
-                          ? Colors.white
-                          : Colors.black,
                       minimumSize: Size(0, 40),
                       padding: EdgeInsets.symmetric(horizontal: 8),
                     ),
@@ -260,10 +249,10 @@ class FlightSearchState extends State<FlightSearch> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FlightsPage(
-                          trip: trip!,
+                          tripType: trip!,
                           from: fromAirport!,
                           to: toAirport!,
-                          date: departureDate!,
+                          departureDate: departureDate!,
                           passengers: passengers,
                           flightClass: flightClass!,
                         ),

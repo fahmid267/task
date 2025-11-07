@@ -4,8 +4,9 @@ import 'package:task/models/flight.dart';
 class FlightCard extends StatelessWidget {
   final Flight? flight;
   final VoidCallback? onTap;
+  final int? passengers;
 
-  const FlightCard({super.key, this.flight, this.onTap});
+  const FlightCard({super.key, this.flight, this.onTap, this.passengers});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class FlightCard extends StatelessWidget {
                   ),
 
                   Text(
-                    "\$${flight!.price.toString()}/p",
+                    "\$${(flight!.price * passengers!.toDouble()).toString()}",
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                 ],
@@ -53,6 +54,7 @@ class FlightCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
+                    spacing: 5,
                     children: [
                       Text(flight!.from, style: TextStyle(fontSize: 15)),
                       Text(
@@ -62,24 +64,21 @@ class FlightCard extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ),
+                      Text(flight!.departureAirport),
                     ],
                   ),
 
                   Container(
                     child: Column(
                       children: [
-                        // Image.asset(
-                        //   "assets/images/flight_card_img.png",
-                        //   width: 50,
-                        //   height: 50,
-                        // ),
-                        Text(flight!.duration),
+                        Text(flight!.flightDuration),
                         Text("Direct"),
                       ],
                     ),
                   ),
 
                   Column(
+                    spacing: 5,
                     children: [
                       Text(flight!.to, style: TextStyle(fontSize: 15)),
                       Text(
@@ -89,6 +88,8 @@ class FlightCard extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         )
                       ),
+
+                      Text(flight!.arrivalAirport, style: TextStyle(fontSize: 15)),
                     ],
                   ),
                 ],

@@ -10,8 +10,9 @@ import 'package:task/widgets/seatNumber.dart';
 
 class FlightBookingScreen extends StatefulWidget {
   final Flight flight;
+  final int passengers;
 
-  FlightBookingScreen({super.key, required this.flight});
+  const FlightBookingScreen({super.key, required this.flight, required this.passengers});
 
   @override
   State<FlightBookingScreen> createState() => FlightBookingScreenState();
@@ -150,11 +151,9 @@ class FlightBookingScreenState extends State<FlightBookingScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("${widget.flight.airline} (Adult) x1"),
+                                    Text("${widget.flight.airline} (Adult) x${widget.passengers}"),
 
-                                    Text(
-                                      "\$" + widget.flight.price.toString() + ".00",
-                                    ),
+                                    Text("\$${widget.flight.price * widget.passengers}"),
                                   ],
                                 ),
 
@@ -164,14 +163,14 @@ class FlightBookingScreenState extends State<FlightBookingScreen> {
                                   children: [
                                     Text("Travel Insurance"),
 
-                                    Text("\$45.00"),
+                                    Text("\$45.0"),
                                   ],
                                 ),
 
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: [Text("Tax"), Text("\$25.00")],
+                                  children: [Text("Tax"), Text("\$25.0")],
                                 ),
 
                                 SizedBox(height: 30),
@@ -182,12 +181,7 @@ class FlightBookingScreenState extends State<FlightBookingScreen> {
                                   children: [
                                     Text("Total Price"),
 
-                                    Text(
-                                      "\$" +
-                                          (widget.flight.price + 45.00 + 25.00)
-                                              .toString() +
-                                          ".00",
-                                    ),
+                                    Text("\$${(widget.flight.price * widget.passengers)}"),
                                   ],
                                 ),
                               ],
@@ -222,16 +216,30 @@ class FlightBookingScreenState extends State<FlightBookingScreen> {
                   )
                 ),
                 onPressed: () {
-                  if (passenger.name == null) {
-                    //
+                  if (passenger.name == "" || passenger.email == "" || passenger.contactNo == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Please enter all your credentials."))
+                    );
+
+                    return;
                   }
+                  
+                  if (selectedSeat == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Please select a seat number."))
+                    );
+
+                    return;
+                  }
+
                   Navigator.push(
                     context, 
                     MaterialPageRoute(
                       builder: (context) => PaymentConfirmation(
                         flight: widget.flight,
                         passenger: passenger,
-                        seat: selectedSeat
+                        seat: selectedSeat,
+                        passengers: widget.passengers,
                       )
                     )
                   );

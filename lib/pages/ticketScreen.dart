@@ -8,7 +8,13 @@ class TicketScreen extends StatelessWidget {
   final int? seat;
   final String bookingID;
 
-  const TicketScreen({super.key, required this.flight, required this.passenger, required this.seat, required this.bookingID});
+  const TicketScreen({
+    super.key,
+    required this.flight,
+    required this.passenger,
+    required this.seat,
+    required this.bookingID,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +68,26 @@ class TicketScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
 
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Booking ID"),
+                      Text(
+                        "Booking ID",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       Text(
                         bookingID,
                         style: TextStyle(
+                          color: Colors.black,
                           fontWeight: FontWeight.bold
                         ),
-                      )
+                      ),
                     ],
                   ),
 
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
 
                   Divider(
                     thickness: 1,
@@ -88,105 +98,105 @@ class TicketScreen extends StatelessWidget {
 
                   Text(
                     "Flight Information",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                   ),
 
                   Expanded(
                     child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Flight No."),
-                      Text("BG")
-                    ],
-                  ),
-                  ),
-                  
-                  Expanded(
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Arrival"),
-                      Text(flight.from)
-                    ],
-                  ),
-                  ),
-                  
-                  Expanded(
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Destination"),
-                      Text(flight.to)
-                    ],
-                  ),
-                  ),
-                  
-                  Expanded(
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Estimated Departure Time"),
-                      Text(flight.departureTime)
-                    ],
-                  ),
-                  ),
-                  
-                  Expanded(
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Estimated Arrival Time"),
-                      Text(flight.arrivalTime)
-                    ],
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Flight No.", style: TextStyle(color: Colors.black),), 
+                        Text(flight.flightNo, style: TextStyle(color: Colors.black),)
+                      ],
+                    ),
                   ),
 
-                  SizedBox(height: 10,),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Arrival", style: TextStyle(color: Colors.black),), 
+                        Text(flight.from , style: TextStyle(color: Colors.black),)
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Destination", style: TextStyle(color: Colors.black),), 
+                        Text(flight.to, style: TextStyle(color: Colors.black),)
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Estimated Departure Time", style: TextStyle(color: Colors.black),),
+                        Text(flight.departureTime, style: TextStyle(color: Colors.black),),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Estimated Arrival Time", style: TextStyle(color: Colors.black),),
+                        Text(flight.arrivalTime, style: TextStyle(color: Colors.black),),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
 
                   Text(
                     "Passenger Information",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                   ),
 
                   Expanded(
                     child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Passenger name"),
-                      Text(passenger.name)
-                    ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Passenger name", style: TextStyle(color: Colors.black),), 
+                        Text(passenger.name, style: TextStyle(color: Colors.black),)
+                      ],
+                    ),
                   ),
-                  ),
-                  
+
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Email"),
-                        Text(passenger.email)
+                        Text("Email", style: TextStyle(color: Colors.black),), 
+                        Text(passenger.email, style: TextStyle(color: Colors.black),)
                       ],
                     ),
                   ),
-                  
+
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Phone no."),
-                        Text(passenger.contactNo)
+                        Text("Phone no.", style: TextStyle(color: Colors.black),), 
+                        Text(passenger.contactNo, style: TextStyle(color: Colors.black),)
                       ],
                     ),
                   ),
-                  
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Seat no."),
-                      Text(seat.toString())
+                      Text("Seat no.", style: TextStyle(color: Colors.black),), 
+                      Text(seat.toString(), style: TextStyle(color: Colors.black),)
                     ],
                   ),
 
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10),
 
                   Divider(
                     thickness: 1,

@@ -6,8 +6,13 @@ import 'package:task/widgets/flightCard2.dart';
 
 class FlightDetails extends StatelessWidget {
   final Flight flight;
+  final int passengers;
 
-  const FlightDetails({Key? key, required this.flight}) : super(key: key);
+  const FlightDetails({
+    super.key,
+    required this.flight,
+    required this.passengers,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,6 @@ class FlightDetails extends StatelessWidget {
 
                 SizedBox(height: 10),
 
-                
                 // Amenities Card
                 Card(
                   child: Padding(
@@ -73,7 +77,7 @@ class FlightDetails extends StatelessWidget {
                                       ),
                                     ),
 
-                                    Icon(Icons.person)
+                                    Icon(Icons.person),
                                   ],
                                 ),
                               ],
@@ -81,10 +85,7 @@ class FlightDetails extends StatelessWidget {
                           ],
                         ),
 
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey,
-                        ),
+                        Divider(thickness: 1, color: Colors.grey),
 
                         SizedBox(height: 20),
 
@@ -98,7 +99,6 @@ class FlightDetails extends StatelessWidget {
             ),
           ),
 
-          
           // Bottom button container
           Container(
             decoration: BoxDecoration(
@@ -113,10 +113,10 @@ class FlightDetails extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Total price"),
+                      Text("Total price x${passengers}"),
 
                       Text(
-                        "\$" + flight.price.toString(),
+                        "\$${(flight.price * passengers.toDouble()).toString()}",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class FlightDetails extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              FlightBookingScreen(flight: flight),
+                              FlightBookingScreen(flight: flight, passengers: passengers,),
                         ),
                       );
                     },

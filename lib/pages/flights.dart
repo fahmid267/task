@@ -5,19 +5,19 @@ import 'package:task/widgets/flight_card.dart';
 import 'package:intl/intl.dart';
 
 class FlightsPage extends StatelessWidget {
-  final String trip;
+  final String tripType;
   final String from;
   final String to;
-  final DateTime date;
+  final DateTime departureDate;
   final int passengers;
   final String flightClass;
 
   const FlightsPage({
     super.key,
-    required this.trip,
+    required this.tripType,
     required this.from,
     required this.to,
-    required this.date,
+    required this.departureDate,
     required this.passengers,
     required this.flightClass,
   });
@@ -27,80 +27,92 @@ class FlightsPage extends StatelessWidget {
     final List<Flight> flights = [
       Flight(
         airline: "Biman Bangladesh",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "08:00",
         arrivalTime: "12:00",
         flightClass: "Economy",
         price: 1250.0,
         airlineLogoPath: "assets/images/biman_bangladesh.png",
-        duration: "12h 45m",
+        flightDuration: "12h 45m",
         flightNo: "BG400"
       ),
       Flight(
         airline: "Emirates",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "12:00",
         arrivalTime: "01:00",
         flightClass: "Business",
         price: 1400.0,
         airlineLogoPath: "assets/images/emirates.png",
-        duration: "16h 00m",
+        flightDuration: "16h 00m",
         flightNo: "UAE116"
       ),
       Flight(
         airline: "Qatar Airways",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "09:00",
         arrivalTime: "23:00",
         flightClass: "Economy",
         price: 1350.0,
         airlineLogoPath: "assets/images/qatar_airways.png",
-        duration: "14h 00m",
+        flightDuration: "14h 00m",
         flightNo: "QA213"
       ),
       Flight(
         airline: "British Airways",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "20:00",
         arrivalTime: "12:00",
         flightClass: "Economy",
         price: 1320.0,
         airlineLogoPath: "assets/images/british_airways.jpg",
-        duration: "13h 30m",
+        flightDuration: "13h 30m",
         flightNo: "BA78"
       ),
       Flight(
         airline: "Singapore Airlines",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "02:00",
         arrivalTime: "15:00",
         flightClass: "Economy",
         price: 1500.0,
         airlineLogoPath: "assets/images/singapore_airlines.png",
-        duration: "14h 10m",
+        flightDuration: "14h 10m",
         flightNo: "SIN504"
       ),
       Flight(
         airline: "Turkish Airlines",
-        from: "Dhaka (DAC)",
-        to: "New York (JFK)",
-        date: DateTime(2025, 12, 10),
+        from: "Dhaka",
+        to: "New York",
+        departureAirport: "DAC",
+        arrivalAirport: "NYC",
+        flightDate: DateTime(2025, 12, 10),
         departureTime: "05:00",
         arrivalTime: "15:00",
         flightClass: "Economy",
         price: 1100.0,
         airlineLogoPath: "assets/images/turkish_airlines.png",
-        duration: "12h 15m",
+        flightDuration: "12h 15m",
         flightNo: "TIL1054"
       ),
     ];
@@ -108,9 +120,9 @@ class FlightsPage extends StatelessWidget {
     final filteredFlights = flights
         .where(
           (flight) =>
-              flight.from == from &&
-              flight.to == to &&
-              flight.date == date &&
+              from.contains(flight.from) &&
+              to.contains(flight.to) &&
+              flight.flightDate == departureDate &&
               flight.flightClass == flightClass,
         )
         .toList();
@@ -137,7 +149,7 @@ class FlightsPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {}, 
                 child: Text(
-                  DateFormat("dd MMM, yyyy").format(date),
+                  DateFormat("dd MMM, yyyy").format(departureDate),
                   style: TextStyle(
                     color: Colors.blue
                   ),
@@ -157,12 +169,16 @@ class FlightsPage extends StatelessWidget {
 
                     return FlightCard(
                       flight: flight,
+                      passengers: passengers,
 
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FlightDetails(flight: flight),
+                            builder: (context) => FlightDetails(
+                              flight: flight, 
+                              passengers: passengers
+                            ),
                           ),
                         );
                       },

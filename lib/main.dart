@@ -59,13 +59,7 @@ class HomePage extends StatelessWidget {
   final ThemeMode themeMode;
   final ValueChanged<bool> onThemeChanged;
 
-  final Passenger passenger = Passenger(
-    name: "Fahmid",
-    contactNo: "+8801728826321",
-    email: "fahmid267@gmail.com",
-  );
-
-  HomePage({super.key, required this.themeMode, required this.onThemeChanged});
+  const HomePage({super.key, required this.themeMode, required this.onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +76,9 @@ class HomePage extends StatelessWidget {
             title: Text("FlightApp"),
             centerTitle: true,
             actions: [
-              Icon(Icons.circle_notifications_outlined, size: 50),
+              Icon(
+                Icons.circle_notifications_outlined, size: 40),
+              
               Switch(
                 value: isDarkMode,
                 onChanged: onThemeChanged,
@@ -98,7 +94,7 @@ class HomePage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(30),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FlightSearch(),
 
@@ -115,6 +111,7 @@ class HomePage extends StatelessWidget {
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     spacing: 10,
@@ -139,9 +136,9 @@ class HomePage extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 15),
 
-              // ListView
+              // Special Offers ListView
               SpecialOffer(),
             ],
           ),
@@ -153,15 +150,9 @@ class HomePage extends StatelessWidget {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.save_alt), label: "Saved"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.airplane_ticket),
-            label: "Bookings",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.airplane_ticket), label: "Bookings"),
           BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Wallet"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
-            label: "Account",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: "Account"),
         ],
       ),
     );

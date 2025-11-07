@@ -37,7 +37,7 @@ class FlightCard2 extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          DateFormat("E, MMM d yyyy").format(flight.date),
+                          DateFormat("E, MMM d yyyy").format(flight.flightDate),
                           style: TextStyle(
                             fontSize: 11
                           ),
@@ -57,6 +57,7 @@ class FlightCard2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  spacing: 5,
                   children: [
                     Text(flight!.from, style: TextStyle(fontSize: 15)),
                     Text(
@@ -66,19 +67,21 @@ class FlightCard2 extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       )
                     ),
+                    Text(flight!.departureAirport, style: TextStyle(fontSize: 15)),
                   ],
                 ),
 
                 Container(
                   child: Column(
                     children: [
-                      Text(flight.duration),
+                      Text(flight.flightDuration),
                       Text("Direct"),
                     ],
                   ),
                 ),
 
                 Column(
+                  spacing: 5,
                   children: [
                     Text(flight!.to, style: TextStyle(fontSize: 15)),
                     Text(
@@ -88,6 +91,7 @@ class FlightCard2 extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       )
                     ),
+                    Text(flight!.arrivalAirport, style: TextStyle(fontSize: 15)),
                   ],
                 ),
               ],
