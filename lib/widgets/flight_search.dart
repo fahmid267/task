@@ -153,7 +153,7 @@ class FlightSearchState extends State<FlightSearch> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       labelText: departureDate == null
-                          ? "Date"
+                          ? "Departure Date"
                           : "${departureDate!.day}/${departureDate!.month}/${departureDate!.year}",
                       prefixIcon: Icon(Icons.calendar_today),
                     ),

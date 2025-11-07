@@ -38,7 +38,7 @@ class FlightsPage extends StatelessWidget {
         price: 1250.0,
         airlineLogoPath: "assets/images/biman_bangladesh.png",
         flightDuration: "12h 45m",
-        flightNo: "BG400"
+        flightNo: "BG400",
       ),
       Flight(
         airline: "Emirates",
@@ -53,7 +53,7 @@ class FlightsPage extends StatelessWidget {
         price: 1400.0,
         airlineLogoPath: "assets/images/emirates.png",
         flightDuration: "16h 00m",
-        flightNo: "UAE116"
+        flightNo: "UAE116",
       ),
       Flight(
         airline: "Qatar Airways",
@@ -68,7 +68,7 @@ class FlightsPage extends StatelessWidget {
         price: 1350.0,
         airlineLogoPath: "assets/images/qatar_airways.png",
         flightDuration: "14h 00m",
-        flightNo: "QA213"
+        flightNo: "QA213",
       ),
       Flight(
         airline: "British Airways",
@@ -83,7 +83,7 @@ class FlightsPage extends StatelessWidget {
         price: 1320.0,
         airlineLogoPath: "assets/images/british_airways.jpg",
         flightDuration: "13h 30m",
-        flightNo: "BA78"
+        flightNo: "BA78",
       ),
       Flight(
         airline: "Singapore Airlines",
@@ -98,7 +98,7 @@ class FlightsPage extends StatelessWidget {
         price: 1500.0,
         airlineLogoPath: "assets/images/singapore_airlines.png",
         flightDuration: "14h 10m",
-        flightNo: "SIN504"
+        flightNo: "SIN504",
       ),
       Flight(
         airline: "Turkish Airlines",
@@ -113,7 +113,7 @@ class FlightsPage extends StatelessWidget {
         price: 1100.0,
         airlineLogoPath: "assets/images/turkish_airlines.png",
         flightDuration: "12h 15m",
-        flightNo: "TIL1054"
+        flightNo: "TIL1054",
       ),
     ];
 
@@ -147,44 +147,51 @@ class FlightsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {}, 
+                onPressed: () {},
                 child: Text(
                   DateFormat("dd MMM, yyyy").format(departureDate),
-                  style: TextStyle(
-                    color: Colors.blue
-                  ),
+                  style: TextStyle(color: Colors.blue),
                 ),
                 style: ButtonStyle(
                   elevation: WidgetStateProperty.all<double>(5.0),
-                )
+                ),
               ),
 
               SizedBox(height: 2),
 
               Expanded(
-                child: ListView.builder(
-                  itemCount: filteredFlights.length,
-                  itemBuilder: (context, index) {
-                    final flight = filteredFlights[index];
-
-                    return FlightCard(
-                      flight: flight,
-                      passengers: passengers,
-
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FlightDetails(
-                              flight: flight, 
-                              passengers: passengers
-                            ),
+                child: filteredFlights.isEmpty
+                    ? Center(
+                        child: Text(
+                          "No available flights for chosen date.",
+                          style: TextStyle(
+                            fontSize: 20
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: filteredFlights.length,
+                        itemBuilder: (context, index) {
+                          final flight = filteredFlights[index];
+
+                          return FlightCard(
+                            flight: flight,
+                            passengers: passengers,
+
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FlightDetails(
+                                    flight: flight,
+                                    passengers: passengers,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
               ),
             ],
           ),

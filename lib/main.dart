@@ -79,15 +79,48 @@ class HomePage extends StatelessWidget {
               Icon(
                 Icons.circle_notifications_outlined, size: 40),
               
-              Switch(
-                value: isDarkMode,
-                onChanged: onThemeChanged,
-                activeThumbColor: Colors.white,
-              ),
+              // Switch(
+              //   value: isDarkMode,
+              //   onChanged: onThemeChanged,
+              //   activeThumbColor: Colors.white,
+              // ),
             ],
             actionsPadding: EdgeInsets.all(10),
           ),
         ),
+      ),
+
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsetsGeometry.all(10),
+              leading: Icon(Icons.settings),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Settings"),
+                ],
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsetsGeometry.all(10),
+              leading: Icon(Icons.sunny),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Dark Mode"),
+
+                  Switch(
+                    value: isDarkMode, 
+                    onChanged: onThemeChanged,
+                    activeThumbColor: Colors.white,
+                  )
+                ],
+              ),
+            ),
+          ],
+        )
       ),
 
       body: SingleChildScrollView(

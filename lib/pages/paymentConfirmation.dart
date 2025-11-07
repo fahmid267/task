@@ -259,7 +259,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                                     Text("Total Price"),
 
                                     Text(
-                                      "\$${(widget.flight.price * widget.passengers)}",
+                                      "\$${(widget.flight.price * widget.passengers)  + 45.0 + 25.0}",
                                     ),
                                   ],
                                 ),

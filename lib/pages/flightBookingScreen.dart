@@ -181,7 +181,7 @@ class FlightBookingScreenState extends State<FlightBookingScreen> {
                                   children: [
                                     Text("Total Price"),
 
-                                    Text("\$${(widget.flight.price * widget.passengers)}"),
+                                    Text("\$${((widget.flight.price * widget.passengers) + 45.0 + 25.0)}"),
                                   ],
                                 ),
                               ],
