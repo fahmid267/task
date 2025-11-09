@@ -21,3 +21,13 @@ Static data handling was done after the whole UI was built.
 - Static data sharing enables the pages, along with the e-ticket to display the selected flight and passenger's data.
 
 - After the above steps, the dark mode option was built inside the drawer widget.
+
+
+## To view available flights:
+  1. Select One-Way trip
+  2. Select from = Dhaka
+  3. Select to = New York
+  4. Select date = 10 Dec, 2025
+  5. Select class = Economy
+
+  ** Other combinations will not show any available flights as there is no data for them
